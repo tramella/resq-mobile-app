@@ -1,12 +1,9 @@
 import '../models/auth/login_response.dart';
 
-const String baseUrl = 'http://192.168.185.229:9090';
-String wsBaseUrl = 'http://192.168.185.229:9090';
-// String wsBaseUrl = 'http://10.0.2.2:9090';
-final String mapboxToken =
-    "pk.eyJ1IjoidHJhbXRyYW4xMjMiLCJhIjoiY21kNGRkMHQ0MGY2NTJscjZmcDY4bzVuNCJ9.L4-zGwpDVXx9aKqTqbDyvA";
+const String baseUrl = env['BASE_URL'] ?? '';
+String wsBaseUrl = env['WS_BASE_URL'] ?? '';
+final String mapboxToken = env['MAPBOX_TOKEN'] ?? '';
 
-//  Lấy token từ biến toàn cục
 String get token => loginResponse?.token ?? '';
 
 Map<String, String> get headers => {

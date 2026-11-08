@@ -6,6 +6,7 @@ import '../services/geocoding_service.dart';
 import '../services/rescue_api_service.dart';
 import '../services/resfix_service_api.dart';
 import 'confirm_request_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class OnsiteSelectLocationPage extends StatefulWidget {
   final int userId;
@@ -23,8 +24,7 @@ class OnsiteSelectLocationPage extends StatefulWidget {
 }
 
 class _OnsiteSelectLocationPageState extends State<OnsiteSelectLocationPage> {
-  final String mapboxToken =
-      "pk.eyJ1IjoidHJhbXRyYW4xMjMiLCJhIjoiY21kNGRkMHQ0MGY2NTJscjZmcDY4bzVuNCJ9.L4-zGwpDVXx9aKqTqbDyvA";
+  final String mapboxToken = dotenv.env['MAPBOX_TOKEN'] ?? '';
 
   final mapController = MapController();
   final GeocodingService geocodingService = GeocodingService();

@@ -36,7 +36,7 @@ class ConfirmRequestPage extends StatefulWidget {
     required this.rescueType,
     required this.rrid,
     required this.userId,
-    
+
     required this.requestResult,
     required this.startAddress,
     this.destinationAddress,
@@ -53,9 +53,8 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
   static const accentColor = Color(0xFF2980B9);
 
   String? _selectedPaymentMethod;
-  DiscountCode? _appliedDiscount; // Lưu trữ đối tượng DiscountCode đã áp dụng
+  DiscountCode? _appliedDiscount; 
 
-  // Bỏ danh sách _userDiscountCodes ở đây nếu bạn muốn nó hoàn toàn tĩnh trong DiscountPage
   // final List<DiscountCode> _userDiscountCodes = [...];
 
   @override
@@ -64,13 +63,12 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
     _selectedPaymentMethod = widget.requestResult.method; // Set initial method
   }
 
-  // Hàm tính toán tổng tiền cuối cùng
   double _calculateFinalTotal() {
     double total = widget.requestResult.total;
     if (_appliedDiscount != null) {
       total -= _appliedDiscount!.amount;
     }
-    return total > 0 ? total : 0.0; // Đảm bảo tổng tiền không âm
+    return total > 0 ? total : 0.0; 
   }
 
   @override
@@ -92,7 +90,7 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
       ),
       body: Column(
         children: [
-          // MAP SECTION (Giữ nguyên)
+          // MAP SECTION 
           Expanded(
             flex: 3,
             child: Container(
@@ -115,7 +113,7 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
                     children: [
                       TileLayer(
                         urlTemplate:
-                            'https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidHJhbXRyYW4xMjMiLCJhIjoiY21kNGRkMHQ0MGY2NTJscjZmcDY4bzVuNCJ9.L4-zGwpDVXx9aKqTqbDyvA',
+                            'https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=${widget.mapboxToken}',
                         userAgentPackageName: 'com.example.resq_app',
                       ),
                       MarkerLayer(
@@ -275,14 +273,13 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
                               ? '-${_appliedDiscount!.amount.toStringAsFixed(0)} ${bill.currency} (${_appliedDiscount!.code})'
                               : 'No discount applied',
                       onTap: () async {
-                        // Gọi DiscountPage mà không cần truyền availableDiscountCodes hay currentSelectedDiscount
                         final result = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => DiscountPage(
                                   userId: widget.userId,
-                                ), // Gọi constructor mặc định
+                                ), 
                           ),
                         );
                         if (result != null && result is DiscountCode) {
@@ -328,9 +325,6 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
     );
   }
 
-  // Các hàm build helper khác (buildClickableInfoCard, buildSectionTitle, buildInfoCard, buildTotalAmount, buildConfirmButton)
-  // và class _InfoItem giữ nguyên như đã cung cấp trước đó.
-  // ... (Phần còn lại của ConfirmRequestPage không thay đổi) ...
 
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -555,7 +549,7 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
 
                   if (status == "COMPLETED") {
                     timer.cancel();
-                    Navigator.of(context).pop(); // Đóng loading
+                    Navigator.of(context).pop();
 
                     Navigator.pushReplacement(
                       context,
@@ -571,7 +565,7 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
                     );
                   } else if (status == "FAILED" || status == "VOIDED") {
                     timer.cancel();
-                    Navigator.of(context).pop(); // Đóng loading
+                    Navigator.of(context).pop(); 
 
                     showDialog(
                       context: context,
@@ -599,11 +593,11 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
                   }
                 });
               } else {
-                Navigator.of(context).pop(); // Đóng loading
+                Navigator.of(context).pop(); 
                 showSnackBar(context, "Không thể tạo đơn hàng");
               }
             } else {
-              Navigator.of(context).pop(); // Đóng loading nếu chọn tiền mặt
+              Navigator.of(context).pop(); 
 
               Navigator.pushReplacement(
                 context,
@@ -619,7 +613,7 @@ class _ConfirmRequestPageState extends State<ConfirmRequestPage> {
               );
             }
           } catch (e) {
-            Navigator.of(context).pop(); // Đóng loading
+            Navigator.of(context).pop(); 
 
             showSnackBar(context, "Lỗi: $e");
           }

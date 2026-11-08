@@ -6,12 +6,15 @@ import 'package:resq_app/pages/tracking_page.dart';
 import 'package:resq_app/services/rescue_api_service.dart';
 import 'package:resq_app/services/rescue_socket_service.dart';
 import 'package:resq_app/screens/main_screens.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class WaitingPartnerPage extends StatefulWidget {
   final LatLng startLocation;
   final LatLng? destinationLocation;
   final List<LatLng>? routePoints;
   final int rrid;
+
+  final String mapboxToken = dotenv.env['MAPBOX_TOKEN'] ?? '';
 
   const WaitingPartnerPage({
     super.key,
@@ -235,7 +238,7 @@ class _WaitingPartnerPageState extends State<WaitingPartnerPage> {
             children: [
               TileLayer(
                 urlTemplate:
-                    'https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidHJhbXRyYW4xMjMiLCJhIjoiY21kNGRkMHQ0MGY2NTJscjZmcDY4bzVuNCJ9.L4-zGwpDVXx9aKqTqbDyvA',
+                    'https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=${widget.mapboxToken}',
                 userAgentPackageName: 'com.example.resq_app',
               ),
               MarkerLayer(
